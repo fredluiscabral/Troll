@@ -6,7 +6,6 @@
  */
 # include <stdio.h>
 # include <stdlib.h>
-# include <complex.h>
 # include <math.h>
 # include <omp.h>
 # include "matriz.h"
@@ -15,7 +14,7 @@
 struct matrix {
 	int lin;
 	int col;
-	complex **v;
+	double **v;
 };
 
 
@@ -37,7 +36,7 @@ Matriz* matrixKronProd(Matriz *A, Matriz *B) {
 			inicioColuna = j*q;
 			for (k = 0; k < p; k++) {
 				for (l = 0; l < q; l++) {
-					matrixSetElem (C, inicioLinha + k  , inicioColuna + l , (complex) (matrixGetElem (A,i,j) * matrixGetElem(B,k,l)));
+					matrixSetElem (C, inicioLinha + k  , inicioColuna + l , (double) (matrixGetElem (A,i,j) * matrixGetElem(B,k,l)));
 				}
 			}
 		}
@@ -50,7 +49,7 @@ Matriz* matrixMult(Matriz *A, Matriz *B) {
 	Matriz *C;
 	int m, n, p, q;
 	int i, j, k;
-	complex result;
+	double result;
 	m = A->lin;
 	n = A->col;
 	p = B->lin;
@@ -83,16 +82,16 @@ Matriz* matrixCreate(int m, int n) {
 	}
 	mat->lin = m;
 	mat->col = n;
-	mat->v = (complex**) malloc(m * sizeof(complex*));
+	mat->v = (double**) malloc(m * sizeof(double*));
 	for (i = 0; i < m; i++) {
-		mat->v[i] = (complex*) malloc(n * sizeof(complex));
+		mat->v[i] = (double*) malloc(n * sizeof(double));
 	}
 	return mat;
 }
 
 Matriz* matrixAdd(Matriz *A, Matriz *B) {
 	int m, n;
-	complex plus;
+	double plus;
 	Matriz *C;
 	m = A->lin;
 	n = A->col;
@@ -138,7 +137,7 @@ Matriz* matrixAdd(Matriz *A, Matriz *B) {
 
 Matriz* matrixSub(Matriz *A, Matriz *B) {
 	int m, n, i, j;
-	complex plus;
+	double plus;
 	Matriz *C;
 	m = A->lin;
 	n = A->col;
@@ -154,7 +153,7 @@ Matriz* matrixSub(Matriz *A, Matriz *B) {
 
 Matriz* matrixAdjoint(Matriz *A) {
 	int m, n, i, j;
-	complex result;
+	double result;
 	Matriz *C;
 	m = A->lin;
 	n = A->col;
@@ -162,7 +161,7 @@ Matriz* matrixAdjoint(Matriz *A) {
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			result = (matrixGetElem(A, i, j));
-			result = creal(result) - cimag(result)*I;
+			//result = creal(result) - cimag(result)*I;
 			matrixSetElem(C, j, i, result);
 		}
 	}
@@ -179,7 +178,7 @@ void matrixFree(Matriz *mat) {
 	free(mat);
 }
 
-complex matrixGetElem(Matriz *mat, int i, int j) {
+double matrixGetElem(Matriz *mat, int i, int j) {
 	if (i < 0 || i >= mat->lin || j < 0 || j >= mat->col) {
 		printf("Invalid Access!: line = %d , column = %d\n", i , j);
 		exit(1);
@@ -188,7 +187,7 @@ complex matrixGetElem(Matriz *mat, int i, int j) {
 	return (mat->v[i][j]);
 }
 
-void matrixSetElem(Matriz *mat, int i, int j, complex v) {
+void matrixSetElem(Matriz *mat, int i, int j, double v) {
 	if (i < 0 || i >= mat->lin || j < 0 || j >= mat->col) {
 		printf("Impossible to assign the value!:  line = %d , column = %d\n", i , j);
 		exit(1);
@@ -205,9 +204,9 @@ int matrixGetNumOfColumns(Matriz *mat) {
 
 }
 
-complex matrixTrace (Matriz *A){
+double matrixTrace (Matriz *A){
 	int i;
-	complex trace = 0;
+	double trace = 0;
 	if (matrixGetNumOfLines(A)!= matrixGetNumOfColumns(A)){
 		printf ("Impossible to compute trace: not a square matrix");
 		exit(1);

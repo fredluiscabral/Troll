@@ -17,11 +17,11 @@ Matriz* matrixAdd (Matriz* A, Matriz* B);
 Matriz* matrixSub (Matriz* A, Matriz* B);
 Matriz* matrixAdjoint(Matriz *A);
 void matrixFree (Matriz* mat);
-complex matrixGetElem (Matriz* mat, int i, int j);
-void matrixSetElem (Matriz* mat, int i, int j, complex v);
+double matrixGetElem (Matriz* mat, int i, int j);
+void matrixSetElem (Matriz* mat, int i, int j, double v);
 int matrixGetNumOfLines (Matriz* mat);
 int matrixGetNumOfColumns (Matriz* mat);
-complex matrixTrace (Matriz *A);
+double matrixTrace (Matriz *A);
 double matrixHilbertSchmidtDistance(Matriz *A, Matriz *B);
 
 #endif /* MATRIZ_H_ */
