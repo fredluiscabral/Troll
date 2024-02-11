@@ -8,7 +8,9 @@
 # include <stdlib.h>
 # include <complex.h>
 # include <math.h>
+# include <omp.h>
 # include "matriz.h"
+
 
 struct matrix {
 	int lin;
@@ -89,18 +91,48 @@ Matriz* matrixCreate(int m, int n) {
 }
 
 Matriz* matrixAdd(Matriz *A, Matriz *B) {
-	int m, n, i, j;
+	int m, n;
 	complex plus;
 	Matriz *C;
 	m = A->lin;
 	n = A->col;
 	C = matrixCreate(m, n);
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			plus = (matrixGetElem(A, i, j)) + (matrixGetElem(B, i, j));
-			matrixSetElem(C, i, j, plus);
+
+	int start, end, n_threads;
+
+    double start_time = omp_get_wtime();
+    #pragma omp parallel private(start, end, n_threads)
+    {
+		int i,j;
+        n_threads = omp_get_num_threads();
+        int thread_id = omp_get_thread_num();
+        int rows_per_thread = m / n_threads;
+        int remainder = m % n_threads;
+
+        start = rows_per_thread*thread_id;
+        end = start + rows_per_thread -1;
+
+        if(thread_id+1 <= remainder){
+            start = start+thread_id;
+            end = end+thread_id+1;
+        }
+        else{
+            start = start+remainder;
+            end = end+remainder;
+        }
+
+		//printf ("%d --> %d , %d\n", thread_id, start, end);
+
+		for (i = start; i <= end; i++) {
+			for (j = 0; j < n; j++) {
+				plus = (matrixGetElem(A, i, j)) + (matrixGetElem(B, i, j));
+				matrixSetElem(C, i, j, plus);
+			}
 		}
 	}
+	double stop_time = omp_get_wtime();
+	printf ("Tempo de execução: %f segundos\n\n", (stop_time - start_time));
+
 	return (C);
 }
 
@@ -149,7 +181,7 @@ void matrixFree(Matriz *mat) {
 
 complex matrixGetElem(Matriz *mat, int i, int j) {
 	if (i < 0 || i >= mat->lin || j < 0 || j >= mat->col) {
-		printf("Invalid Access!\n");
+		printf("Invalid Access!: line = %d , column = %d\n", i , j);
 		exit(1);
 	}
 
@@ -158,7 +190,7 @@ complex matrixGetElem(Matriz *mat, int i, int j) {
 
 void matrixSetElem(Matriz *mat, int i, int j, complex v) {
 	if (i < 0 || i >= mat->lin || j < 0 || j >= mat->col) {
-		printf("Impossible to assign the value!\n");
+		printf("Impossible to assign the value!:  line = %d , column = %d\n", i , j);
 		exit(1);
 	}
 	mat->v[i][j] = v;

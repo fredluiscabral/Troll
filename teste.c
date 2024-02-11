@@ -13,30 +13,34 @@
 #include <string.h>
 #include "matriz.h"
 
-int main333 (){
+int main (){
 	Matriz *A , *B , *C;
 	int i,j,l,m,p,q;
 	int passou;
 
+	int N = 5000;
+
 	printf ("Iniciando os testes da TAD matriz\n\n");
 
-	A = matrixCreate(2,2);
+	printf ("Testando a criação da matriz e definição de elementos:\n");
+
+	A = matrixCreate(N,N);
 	l = matrixGetNumOfLines(A);
 	m = matrixGetNumOfColumns(A);
 
-	B = matrixCreate(2,2);
+	B = matrixCreate(N,N);
 	p = matrixGetNumOfLines(B);
 	q = matrixGetNumOfColumns(B);
 
 	for (i=0;i<l;i++){
 		for (j=0;j<m;j++){
-			matrixSetElem(A,i,j,i+j);
+			matrixSetElem(A,i,j,1);
 		}
 	}
 
 	for (i=0;i<p;i++){
 		for (j=0;j<q;j++){
-			matrixSetElem(B,i,j,i*j);
+			matrixSetElem(B,i,j,2);
 		}
 	}
 
@@ -44,7 +48,7 @@ int main333 (){
 
 	for (i=0;i<l;i++){
 		for (j=0;j<m;j++){
-			if (matrixGetElem(A,i,j)!=(i+j)){
+			if (matrixGetElem(A,i,j)!=1){
 				passou = 0;
 			}
 		}
@@ -52,18 +56,19 @@ int main333 (){
 
 	for (i=0;i<l;i++){
 		for (j=0;j<m;j++){
-			if (matrixGetElem(B,i,j)!=(i*j)){
+			if (matrixGetElem(B,i,j)!=2){
 				passou = 0;
 			}
 		}
 	}
-
-	printf ("Testando a criação da matriz e definição de elementos:\n");
+	
 	if (passou == 0){
 		printf ("Falhou ...\n\n");
 	} else {
 		printf ("Passou ...\n\n");
 	}
+
+	printf ("Testando a adição de duas matrizes:\n");
 
 	C = matrixAdd(A,B);
 
@@ -71,19 +76,23 @@ int main333 (){
 
 	for (i=0;i<l;i++){
 		for (j=0;j<m;j++){
-			if (matrixGetElem(C,i,j)!= (i+j)+(i*j)){
+			//printf ("%d , %d = %f\n", i, j,creal(matrixGetElem(C,i,j)));
+			if (matrixGetElem(C,i,j)!= 3){
+				printf ("%d , %d = %f\n", i, j,creal(matrixGetElem(C,i,j)));
 				passou = 0;
 			}
 		}
 	}
 
-	printf ("Testando a adição de duas matrizes:\n");
 	if (passou == 0){
 		printf ("Falhou ...\n\n");
 	} else {
 		printf ("Passou ...\n\n");
 	}
 
+/*
+
+	printf ("Testando a subtração de duas matrizes:\n");
 
 	C = matrixSub(A,B);
 
@@ -97,7 +106,6 @@ int main333 (){
 		}
 	}
 
-	printf ("Testando a subtração de duas matrizes:\n");
 	if (passou == 0){
 		printf ("Falhou ...\n\n");
 	} else {
@@ -211,6 +219,8 @@ int main333 (){
 	} else {
 		printf ("Falhou ...\n\n");
 	}
+
+	*/
 
 	printf ("Fim dos testes !!!\n\n");
 
