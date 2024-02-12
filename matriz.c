@@ -14,7 +14,7 @@
 struct matrix {
 	int lin;
 	int col;
-	double **v;
+	double *v;
 };
 
 
@@ -82,10 +82,15 @@ Matriz* matrixCreate(int m, int n) {
 	}
 	mat->lin = m;
 	mat->col = n;
-	mat->v = (double**) malloc(m * sizeof(double*));
+	//mat->v = (double**) malloc(m*n* sizeof(double*));
+
+	mat->v = (double*) malloc(m * n * sizeof(double));
+
+	/*
 	for (i = 0; i < m; i++) {
 		mat->v[i] = (double*) malloc(n * sizeof(double));
 	}
+	*/
 	return mat;
 }
 
@@ -171,28 +176,27 @@ Matriz* matrixAdjoint(Matriz *A) {
 
 void matrixFree(Matriz *mat) {
 	int i;
-	for (i = 0; i < mat->lin; i++) {
-		free(mat->v[i]);
-	}
 	free(mat->v);
-	free(mat);
+	//free(mat);
 }
 
 double matrixGetElem(Matriz *mat, int i, int j) {
-	if (i < 0 || i >= mat->lin || j < 0 || j >= mat->col) {
-		printf("Invalid Access!: line = %d , column = %d\n", i , j);
-		exit(1);
-	}
-
-	return (mat->v[i][j]);
+    if (i >= 0 && i < mat->lin && j >= 0 && j < mat->col) {
+        return mat->v[i * mat->col + j]; // Acesso ajustado para array unidimensional
+    } else {
+        printf("Index out of bounds\n");
+        exit(1);
+    }
 }
 
-void matrixSetElem(Matriz *mat, int i, int j, double v) {
-	if (i < 0 || i >= mat->lin || j < 0 || j >= mat->col) {
-		printf("Impossible to assign the value!:  line = %d , column = %d\n", i , j);
-		exit(1);
-	}
-	mat->v[i][j] = v;
+
+void matrixSetElem(Matriz *mat, int i, int j, double value) {
+    if (i >= 0 && i < mat->lin && j >= 0 && j < mat->col) {
+        mat->v[i * mat->col + j] = value; // Atribuição ajustada para array unidimensional
+    } else {
+        printf("Index out of bounds\n");
+        exit(1);
+    }
 }
 
 int matrixGetNumOfLines(Matriz *mat) {

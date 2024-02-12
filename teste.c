@@ -31,6 +31,8 @@ int main (){
 	p = matrixGetNumOfLines(B);
 	q = matrixGetNumOfColumns(B);
 
+	printf ("Aqui 1...\n\n");
+
 	for (i=0;i<l;i++){
 		for (j=0;j<m;j++){
 			matrixSetElem(A,i,j,1);
@@ -42,6 +44,8 @@ int main (){
 			matrixSetElem(B,i,j,2);
 		}
 	}
+
+	printf ("Aqui...\n\n");
 
 	passou = 1;
 
