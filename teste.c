@@ -81,7 +81,7 @@ int main (){
 		for (j=0;j<m;j++){
 			//printf ("%d , %d = %f\n", i, j,creal(matrixGetElem(C,i,j)));
 			if (matrixGetElem(C,i,j)!= 3){
-				printf ("%d , %d = %f\n", i, j,matrixGetElem(C,i,j));
+				//printf ("%d , %d = %f\n", i, j,matrixGetElem(C,i,j));
 				passou = 0;
 			}
 		}

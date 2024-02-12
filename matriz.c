@@ -128,9 +128,8 @@ Matriz* matrixAdd(Matriz *A, Matriz *B) {
 		//printf ("%d --> %d , %d\n", thread_id, start, end);
 
 		for (i = start; i <= end; i++) {
-			for (j = 0; j < n; j++) {
-				plus = (matrixGetElem(A, i, j)) + (matrixGetElem(B, i, j));
-				matrixSetElem(C, i, j, plus);
+			for (j = 0; j < n; j++) {				
+				matrixSetElem(C, i, j, (matrixGetElem(A, i, j)) + (matrixGetElem(B, i, j)));
 			}
 		}
 	}
