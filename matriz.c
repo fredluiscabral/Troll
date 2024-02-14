@@ -94,7 +94,7 @@ Matriz* matrixCreate(int m, int n) {
 	return mat;
 }
 
-Matriz* matrixAdd(Matriz *A, Matriz *B) {
+Matriz* matrixAdd(Matriz *A, Matriz *B, int N) {
 	int m, n;
 	double plus;
 	Matriz *C;
@@ -129,7 +129,8 @@ Matriz* matrixAdd(Matriz *A, Matriz *B) {
 
 		for (i = start; i <= end; i++) {
 			for (j = 0; j < n; j++) {				
-				matrixSetElem(C, i, j, (matrixGetElem(A, i, j)) + (matrixGetElem(B, i, j)));
+				//matrixSetElem(C, i, j, (matrixGetElem(A, i, j)) + (matrixGetElem(B, i, j)));
+				C[i*N + j] = A[i*N + j] + B[i*N + j];
 			}
 		}
 	}
