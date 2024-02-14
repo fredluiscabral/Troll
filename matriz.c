@@ -180,22 +180,22 @@ void matrixFree(Matriz *mat) {
 }
 
 double matrixGetElem(Matriz *mat, int i, int j) {
-    if (i >= 0 && i < mat->lin && j >= 0 && j < mat->col) {
+    //if (i >= 0 && i < mat->lin && j >= 0 && j < mat->col) {
         return mat->v[i * mat->col + j]; // Acesso ajustado para array unidimensional
-    } else {
-        printf("Index out of bounds\n");
-        exit(1);
-    }
+    //} else {
+    //    printf("Index out of bounds\n");
+    //    exit(1);
+    //}
 }
 
 
 void matrixSetElem(Matriz *mat, int i, int j, double value) {
-    if (i >= 0 && i < mat->lin && j >= 0 && j < mat->col) {
+    //if (i >= 0 && i < mat->lin && j >= 0 && j < mat->col) {
         mat->v[i * mat->col + j] = value; // Atribuição ajustada para array unidimensional
-    } else {
-        printf("Index out of bounds\n");
-        exit(1);
-    }
+    //} else {
+    //    printf("Index out of bounds\n");
+    //    exit(1);
+    //}
 }
 
 int matrixGetNumOfLines(Matriz *mat) {
