@@ -73,7 +73,7 @@ int main (){
 
 	printf ("Testando a adição de duas matrizes:\n");
 
-	C = matrixAdd(A,B);
+	C = matrixAdd(A,B,N);
 
 	passou = 1;
 
