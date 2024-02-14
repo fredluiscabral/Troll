@@ -13,7 +13,7 @@ typedef struct matrix Matriz;
 Matriz* matrixKronProd(Matriz *A, Matriz *B);
 Matriz* matrixMult (Matriz* A, Matriz* B);
 Matriz* matrixCreate (int m, int n);
-Matriz* matrixAdd (Matriz* A, Matriz* B);
+Matriz* matrixAdd (Matriz* A, Matriz* B, int N);
 Matriz* matrixSub (Matriz* A, Matriz* B);
 Matriz* matrixAdjoint(Matriz *A);
 void matrixFree (Matriz* mat);
